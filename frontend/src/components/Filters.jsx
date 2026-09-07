@@ -5,13 +5,21 @@ const Filters = ({
   onReset,
 }) => {
   const getOptions = (field) => {
-    return [
+    const options = [
       ...new Set(
         insights
           .map((item) => item[field])
-          .filter((value) => value !== undefined && value !== "")
+          .filter((value) => {
+            // Filter out undefined, null, empty strings, and whitespace-only strings
+            return value !== undefined &&
+                   value !== null &&
+                   value !== "" &&
+                   String(value).trim() !== "";
+          })
       ),
     ].sort();
+
+    return options;
   };
 
   const filterConfig = [

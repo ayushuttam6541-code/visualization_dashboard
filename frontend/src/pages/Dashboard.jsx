@@ -52,17 +52,46 @@ const Dashboard = () => {
   useEffect(() => {
     let filtered = insights;
 
+    // Apply each filter
     Object.keys(filters).forEach((key) => {
-      if (filters[key]) {
+      const filterValue = filters[key];
+
+      // Only apply filter if value is set and not empty
+      if (filterValue && filterValue !== "") {
         filtered = filtered.filter((item) => {
           const value = item[key];
-          return value && value.toString() === filters[key];
+
+          // Handle undefined/null values
+          if (value === undefined || value === null) {
+            return false;
+          }
+
+          // Handle empty strings
+          if (value === "" || value === " ") {
+            return false;
+          }
+
+          // Convert both to string for comparison
+          const valueStr = String(value).trim();
+          const filterStr = String(filterValue).trim();
+
+          // Case-insensitive comparison
+          return valueStr.toLowerCase() === filterStr.toLowerCase();
         });
       }
     });
 
     console.log("Filters applied:", filters);
     console.log("Filtered insights count:", filtered.length);
+
+    // Debug: Show sample of filtered data
+    if (filtered.length > 0) {
+      console.log("Sample filtered insight:", filtered[0]);
+    } else {
+      console.log("No data after filtering. Active filters:", Object.entries(filters).filter(([k,v]) => v));
+      console.log("Sample original data:", insights[0]);
+    }
+
     setFilteredInsights(filtered);
   }, [filters, insights]);
 
