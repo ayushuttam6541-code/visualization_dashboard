@@ -11,10 +11,11 @@ const Filters = ({
           .map((item) => item[field])
           .filter((value) => {
             // Filter out undefined, null, empty strings, and whitespace-only strings
-            return value !== undefined &&
-                   value !== null &&
-                   value !== "" &&
-                   String(value).trim() !== "";
+            if (value === undefined || value === null) {
+              return false;
+            }
+            const strValue = String(value).trim();
+            return strValue !== "" && strValue !== " ";
           })
       ),
     ].sort();

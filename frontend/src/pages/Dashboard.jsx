@@ -66,8 +66,8 @@ const Dashboard = () => {
             return false;
           }
 
-          // Handle empty strings
-          if (value === "" || value === " ") {
+          // Handle empty strings and whitespace
+          if (value === "" || String(value).trim() === "") {
             return false;
           }
 
@@ -80,17 +80,6 @@ const Dashboard = () => {
         });
       }
     });
-
-    console.log("Filters applied:", filters);
-    console.log("Filtered insights count:", filtered.length);
-
-    // Debug: Show sample of filtered data
-    if (filtered.length > 0) {
-      console.log("Sample filtered insight:", filtered[0]);
-    } else {
-      console.log("No data after filtering. Active filters:", Object.entries(filters).filter(([k,v]) => v));
-      console.log("Sample original data:", insights[0]);
-    }
 
     setFilteredInsights(filtered);
   }, [filters, insights]);
