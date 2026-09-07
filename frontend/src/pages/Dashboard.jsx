@@ -50,36 +50,62 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    let filtered = insights;
+    let filtered = [...insights];
 
-    // Apply each filter
-    Object.keys(filters).forEach((key) => {
-      const filterValue = filters[key];
+    // Apply each filter individually
+    if (filters.end_year && filters.end_year !== "") {
+      filtered = filtered.filter(item =>
+        item.end_year && String(item.end_year).trim() === String(filters.end_year).trim()
+      );
+    }
 
-      // Only apply filter if value is set and not empty
-      if (filterValue && filterValue !== "") {
-        filtered = filtered.filter((item) => {
-          const value = item[key];
+    if (filters.topic && filters.topic !== "") {
+      filtered = filtered.filter(item =>
+        item.topic && String(item.topic).trim().toLowerCase() === String(filters.topic).trim().toLowerCase()
+      );
+    }
 
-          // Handle undefined/null values
-          if (value === undefined || value === null) {
-            return false;
-          }
+    if (filters.sector && filters.sector !== "") {
+      filtered = filtered.filter(item =>
+        item.sector && String(item.sector).trim().toLowerCase() === String(filters.sector).trim().toLowerCase()
+      );
+    }
 
-          // Handle empty strings and whitespace
-          if (value === "" || String(value).trim() === "") {
-            return false;
-          }
+    if (filters.region && filters.region !== "") {
+      filtered = filtered.filter(item =>
+        item.region && String(item.region).trim().toLowerCase() === String(filters.region).trim().toLowerCase()
+      );
+    }
 
-          // Convert both to string for comparison
-          const valueStr = String(value).trim();
-          const filterStr = String(filterValue).trim();
+    if (filters.pestle && filters.pestle !== "") {
+      filtered = filtered.filter(item =>
+        item.pestle && String(item.pestle).trim().toLowerCase() === String(filters.pestle).trim().toLowerCase()
+      );
+    }
 
-          // Case-insensitive comparison
-          return valueStr.toLowerCase() === filterStr.toLowerCase();
-        });
-      }
-    });
+    if (filters.source && filters.source !== "") {
+      filtered = filtered.filter(item =>
+        item.source && String(item.source).trim().toLowerCase() === String(filters.source).trim().toLowerCase()
+      );
+    }
+
+    if (filters.swot && filters.swot !== "") {
+      filtered = filtered.filter(item =>
+        item.swot && String(item.swot).trim().toLowerCase() === String(filters.swot).trim().toLowerCase()
+      );
+    }
+
+    if (filters.country && filters.country !== "") {
+      filtered = filtered.filter(item =>
+        item.country && String(item.country).trim().toLowerCase() === String(filters.country).trim().toLowerCase()
+      );
+    }
+
+    if (filters.city && filters.city !== "") {
+      filtered = filtered.filter(item =>
+        item.city && String(item.city).trim().toLowerCase() === String(filters.city).trim().toLowerCase()
+      );
+    }
 
     setFilteredInsights(filtered);
   }, [filters, insights]);

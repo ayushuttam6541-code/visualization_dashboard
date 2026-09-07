@@ -15,7 +15,7 @@ const Filters = ({
               return false;
             }
             const strValue = String(value).trim();
-            return strValue !== "" && strValue !== " ";
+            return strValue !== "" && strValue !== " " && strValue !== "null" && strValue !== "undefined";
           })
       ),
     ].sort();
